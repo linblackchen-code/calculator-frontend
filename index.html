@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f5f3ed" />
+    <script src="theme.js?v=20261006-2"></script>
+    <title>计算器</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'%3E%3Crect width='80' height='80' rx='22' fill='%23eeb65d'/%3E%3Ctext x='40' y='56' text-anchor='middle' font-size='50' fill='%23242723'%3E%3D%3C/text%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="styles.css?v=20261006-2" />
+    <script src="config.js?v=20261006-2" defer></script>
+    <script src="app.js?v=20261006-2" defer></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <main>
+        <div class="workspace">
+          <section class="calculator card" aria-labelledby="calculator-title">
+            <div class="card-heading"><h2 id="calculator-title">计算器</h2><select id="theme-mode" class="theme-select" aria-label="主题模式" title="自动：07:00–19:00 浅色，其余时间深色"><option value="auto">自动主题</option><option value="light">浅色</option><option value="dark">深色</option></select></div>
+            <div class="display">
+              <label for="expression">输入表达式</label>
+              <input id="expression" type="text" maxlength="1024" placeholder="例如 (12 + 8) × 3" autocomplete="off" spellcheck="false" aria-describedby="expression-hint" />
+              <div class="answer-row"><span class="answer-label">结果</span><output id="result" aria-live="polite">0</output></div>
+            </div>
+            <p class="feedback" id="feedback" role="status" aria-live="polite"></p>
+            <div class="keypad" aria-label="计算器键盘">
+              <button type="button" class="key key-clear" data-action="clear">AC</button>
+              <button type="button" class="key key-function" data-value="(">(</button>
+              <button type="button" class="key key-function" data-value=")">)</button>
+              <button type="button" class="key key-operator" data-value="÷" aria-label="除以">÷</button>
+              <button type="button" class="key" data-value="7">7</button><button type="button" class="key" data-value="8">8</button><button type="button" class="key" data-value="9">9</button>
+              <button type="button" class="key key-operator" data-value="×" aria-label="乘以">×</button>
+              <button type="button" class="key" data-value="4">4</button><button type="button" class="key" data-value="5">5</button><button type="button" class="key" data-value="6">6</button>
+              <button type="button" class="key key-operator" data-value="-" aria-label="减去">−</button>
+              <button type="button" class="key" data-value="1">1</button><button type="button" class="key" data-value="2">2</button><button type="button" class="key" data-value="3">3</button>
+              <button type="button" class="key key-operator" data-value="+" aria-label="加上">+</button>
+              <button type="button" class="key" data-value="0">0</button><button type="button" class="key" data-value=".">.</button>
+              <button type="button" class="key key-function" data-action="backspace" aria-label="退格">⌫</button>
+              <button type="button" class="key key-equals" id="calculate" data-action="calculate" aria-label="计算结果">=</button>
+            </div>
+            <span class="sr-only" id="expression-hint">Enter 计算，Esc 清空，支持括号与正负号。</span>
+          </section>
+          <section class="history card" aria-labelledby="history-title">
+            <div class="card-heading"><div class="history-heading"><h2 id="history-title">历史记录</h2><span class="count-badge" id="history-count">0</span></div><div class="history-actions"><button type="button" class="text-button" id="export-history" title="导出当前搜索和收藏筛选下的全部记录">导出 CSV</button><button type="button" class="text-button" id="refresh-history">↻ 刷新</button></div></div>
+            <label class="search-box"><span aria-hidden="true">⌕</span><span class="sr-only">搜索历史表达式或结果</span><input id="history-search" type="search" maxlength="1024" placeholder="搜索表达式或结果…" /></label>
+            <label class="history-filter"><input id="favorites-only" type="checkbox" />仅收藏</label>
+            <p id="history-message" class="history-message" role="status" aria-live="polite"></p>
+            <div class="history-list" id="history-list" aria-busy="true"></div>
+            <div class="history-empty" id="history-empty" hidden><p id="empty-title">暂无历史记录</p></div>
+            <div class="pagination" id="pagination" hidden><button type="button" id="previous-page" aria-label="上一页">←</button><span id="page-info">1 / 1</span><button type="button" id="next-page" aria-label="下一页">→</button></div>
+          </section>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>
