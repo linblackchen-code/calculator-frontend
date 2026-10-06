@@ -2,6 +2,8 @@
 
 原生 HTML、CSS 和 JavaScript，无需 npm 或构建步骤。前端不包含表达式计算引擎，最终结果来自后端 API。
 
+公网演示：<http://47.114.63.69/>。后端源码见 [calculator-backend](https://github.com/linblackchen-code/calculator-backend)，历史记录保存在服务器后端的 SQLite 数据库中。当前公网环境使用 Ubuntu Nginx 原生部署，部署与更新步骤见[后端部署说明](https://github.com/linblackchen-code/calculator-backend/tree/main/deployment/ubuntu)。
+
 ## 运行环境与启动
 
 需要现代浏览器，以及用于静态文件服务的 Python 3.10+（或任意静态 Web 服务器）。在本仓库目录执行：
@@ -18,6 +20,7 @@ python -m http.server 8080 --bind 127.0.0.1
 
 - 在 `localhost:8080` 或 `127.0.0.1:8080` 开发时默认连接 `http://127.0.0.1:8000`。
 - Docker 构建时使用 `config.production.js` 覆盖 `config.js`，始终使用同源 `/api`，由 Nginx 代理到 `backend:8000`，包括映射到本机 8080 的情况。
+- 当前阿里云 ECS 也将 `config.production.js` 作为网站的 `config.js`，通过同源 `/api` 由 Nginx 转发到本机后端。
 - 若前后端部署到不同网站，将 `apiBaseUrl` 设置为后端的 HTTPS 地址，并在后端 `CORS_ORIGINS` 添加前端完整 origin。
 - HTTPS 网页应连接 HTTPS 后端，避免浏览器混合内容拦截。
 
@@ -48,6 +51,7 @@ docker build -t calculator-frontend .
 - `app.js`：交互、HTTP 请求和历史管理。
 - `theme.js`：首屏主题、时间切换与偏好保存。
 - `config.js`：API 地址。
-- `config.production.js`：Docker 使用的同源 API 配置。
+- `config.production.js`：Docker 和当前 ECS 使用的同源 API 配置。
 - `nginx.conf` / `Dockerfile`：生产部署。
 - `codestyle.md`：代码规范。
+
